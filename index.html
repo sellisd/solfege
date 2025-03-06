@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Note Flashcards</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Notes">
+    
+    <!-- App Icons -->
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.3/build/cjs/vexflow.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 data-i18n="title">Music Note Flashcards</h1>
+            <div class="controls">
+                <select id="languageSelect" class="language-select">
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="el">Ελληνικά</option>
+                </select>
+                <button id="clefToggle" data-i18n="toggleClef">Toggle Clef</button>
+            </div>
+            <div class="score-container">
+                <span data-i18n="score">Score</span>: <span id="score">0</span>
+            </div>
+        </header>
+        
+        <main>
+            <div class="flashcard">
+                <div id="staff"></div>
+                <div class="note-buttons">
+                    <button class="note-btn" data-note="C">C</button>
+                    <button class="note-btn" data-note="D">D</button>
+                    <button class="note-btn" data-note="E">E</button>
+                    <button class="note-btn" data-note="F">F</button>
+                    <button class="note-btn" data-note="G">G</button>
+                    <button class="note-btn" data-note="A">A</button>
+                    <button class="note-btn" data-note="B">B</button>
+                </div>
+                <div id="feedback" class="feedback"></div>
+            </div>
+            
+            <div class="controls">
+                <button id="nextBtn" data-i18n="next">Next</button>
+                <button id="resetBtn" data-i18n="reset">Reset</button>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/logger.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/noteData.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/notes/sw.js', {
+                    scope: '/notes/'
+                })
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
