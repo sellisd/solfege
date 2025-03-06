@@ -1,6 +1,6 @@
 {
   "name": "Music Note Flashcards",
-  "short_name": "Notes",
+  "short_name": "Solfege",
   "description": "Learn to read sheet music with interactive flashcards",
   "start_url": "/solfege/",
   "scope": "/solfege/",
