@@ -27,7 +27,7 @@ const translations = {
     },
     el: {
         title: 'Κάρτες Μουσικών Νοτών',
-        toggleClef: 'Εναλλαγή Κλειδιού',
+        toggleClef: 'Αλλαγή Κλειδιού',
         score: 'Βαθμολογία',
         submit: 'Υποβολή',
         next: 'Επόμενο',
