@@ -34,6 +34,10 @@ class NoteData {
 
         this.currentClef = 'treble';
         this.currentNote = null;
+
+        // Add properties for user level and experience points
+        this.userLevel = 1;
+        this.experiencePoints = 0;
     }
 
     getRandomNote() {
@@ -93,6 +97,33 @@ class NoteData {
 
     getCurrentClef() {
         return this.currentClef;
+    }
+
+    // Implement methods to update user level and experience points
+    addExperiencePoints(points) {
+        this.experiencePoints += points;
+        this.checkLevelUp();
+    }
+
+    checkLevelUp() {
+        const pointsNeeded = this.userLevel * 100; // Example: 100 points per level
+        if (this.experiencePoints >= pointsNeeded) {
+            this.userLevel++;
+            this.experiencePoints -= pointsNeeded;
+            this.unlockNewFeatures();
+        }
+    }
+
+    unlockNewFeatures() {
+        // Unlock new features based on user level
+        if (this.userLevel === 2) {
+            // Example: Unlock additional note ranges
+            this.trebleNotes.push({ note: 'A', vfNote: 'a/5' });
+            this.trebleNotes.push({ note: 'B', vfNote: 'b/5' });
+            this.bassNotes.push({ note: 'D', vfNote: 'd/2' });
+            this.bassNotes.push({ note: 'E', vfNote: 'e/2' });
+        }
+        // Add more unlocks as needed
     }
 }
 

@@ -8,9 +8,14 @@ class MusicFlashcards {
         // Initialize score
         this.score = 0;
         
+        // Initialize user level and experience points
+        this.userLevel = noteData.userLevel;
+        this.experiencePoints = noteData.experiencePoints;
+        
         // Initialize VexFlow and set up event listeners
         this.setupVexFlow();
         this.setupEventListeners();
+        this.updateProgressBar();
     }
 
     setupVexFlow() {
@@ -150,6 +155,13 @@ class MusicFlashcards {
                 oldScore,
                 newScore: this.score
             });
+            
+            // Add experience points and update level
+            noteData.addExperiencePoints(10); // Example: 10 points per correct answer
+            this.userLevel = noteData.userLevel;
+            this.experiencePoints = noteData.experiencePoints;
+            document.getElementById('level').textContent = this.userLevel;
+            this.updateProgressBar();
         }
     }
 
@@ -162,6 +174,18 @@ class MusicFlashcards {
         } else {
             feedback.textContent = `${i18n.translate('incorrect')} ${i18n.translateNote(correctAnswer)}`;
         }
+        
+        // Add level progression feedback
+        if (correct) {
+            feedback.textContent += ` | Level: ${this.userLevel}`;
+        }
+    }
+
+    updateProgressBar() {
+        const progressBar = document.getElementById('progress');
+        const pointsNeeded = this.userLevel * 100; // Example: 100 points per level
+        const progressPercentage = (this.experiencePoints / pointsNeeded) * 100;
+        progressBar.style.width = `${progressPercentage}%`;
     }
 
     setupEventListeners() {
