@@ -14,7 +14,9 @@ class NoteData {
             { note: 'D', vfNote: 'd/5' },
             { note: 'E', vfNote: 'e/5' },
             { note: 'F', vfNote: 'f/5' },
-            { note: 'G', vfNote: 'g/5' }
+            { note: 'G', vfNote: 'g/5' },
+            { note: 'A', vfNote: 'a/5' },  // Added for higher levels
+            { note: 'B', vfNote: 'b/5' }   // Added for higher levels
         ];
 
         this.bassNotes = [
@@ -29,7 +31,9 @@ class NoteData {
             { note: 'G', vfNote: 'g/3' },
             { note: 'A', vfNote: 'a/3' },
             { note: 'B', vfNote: 'b/3' },
-            { note: 'C', vfNote: 'c/4' }  // Middle C
+            { note: 'C', vfNote: 'c/4' },  // Middle C
+            { note: 'D', vfNote: 'd/2' },  // Added for higher levels
+            { note: 'E', vfNote: 'e/2' }   // Added for higher levels
         ];
 
         this.currentClef = 'treble';
@@ -122,6 +126,12 @@ class NoteData {
             this.trebleNotes.push({ note: 'B', vfNote: 'b/5' });
             this.bassNotes.push({ note: 'D', vfNote: 'd/2' });
             this.bassNotes.push({ note: 'E', vfNote: 'e/2' });
+        } else if (this.userLevel === 3) {
+            // Example: Unlock even more note ranges
+            this.trebleNotes.push({ note: 'C', vfNote: 'c/6' });
+            this.trebleNotes.push({ note: 'D', vfNote: 'd/6' });
+            this.bassNotes.push({ note: 'C', vfNote: 'c/2' });
+            this.bassNotes.push({ note: 'B', vfNote: 'b/1' });
         }
         // Add more unlocks as needed
     }
