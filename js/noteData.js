@@ -42,6 +42,10 @@ class NoteData {
         // Add properties for user level and experience points
         this.userLevel = 1;
         this.experiencePoints = 0;
+
+        // Add properties to track consecutive correct answers and earned badges
+        this.consecutiveCorrectAnswers = 0;
+        this.earnedBadges = [];
     }
 
     getRandomNote() {
@@ -91,6 +95,13 @@ class NoteData {
             isCorrect,
             clef: this.currentClef
         });
+
+        if (isCorrect) {
+            this.consecutiveCorrectAnswers++;
+            this.checkAndAwardBadges();
+        } else {
+            this.resetConsecutiveCorrectAnswers();
+        }
         
         return isCorrect;
     }
@@ -134,6 +145,32 @@ class NoteData {
             this.bassNotes.push({ note: 'B', vfNote: 'b/1' });
         }
         // Add more unlocks as needed
+    }
+
+    // Add a method to check and award badges based on consecutive correct answers
+    checkAndAwardBadges() {
+        const badgeCriteria = [
+            { count: 5, badge: '5 correct answers in a row' },
+            { count: 10, badge: '10 correct answers in a row' },
+            { count: 20, badge: '20 correct answers in a row' }
+        ];
+
+        badgeCriteria.forEach(criteria => {
+            if (this.consecutiveCorrectAnswers === criteria.count && !this.earnedBadges.includes(criteria.badge)) {
+                this.earnedBadges.push(criteria.badge);
+                Logger.log('NoteData', 'Badge awarded', { badge: criteria.badge });
+            }
+        });
+    }
+
+    // Add a method to reset the consecutive correct answers count on incorrect answer
+    resetConsecutiveCorrectAnswers() {
+        this.consecutiveCorrectAnswers = 0;
+    }
+
+    // Add a method to get the list of earned badges
+    getEarnedBadges() {
+        return this.earnedBadges;
     }
 }
 

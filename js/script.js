@@ -16,6 +16,7 @@ class MusicFlashcards {
         this.setupVexFlow();
         this.setupEventListeners();
         this.updateProgressBar();
+        this.updateBadgeContainer();
     }
 
     setupVexFlow() {
@@ -162,6 +163,7 @@ class MusicFlashcards {
             this.experiencePoints = noteData.experiencePoints;
             document.getElementById('level').textContent = this.userLevel;
             this.updateProgressBar();
+            this.updateBadgeContainer();
         }
     }
 
@@ -186,6 +188,20 @@ class MusicFlashcards {
         const pointsNeeded = this.userLevel * 100; // Example: 100 points per level
         const progressPercentage = (this.experiencePoints / pointsNeeded) * 100;
         progressBar.style.width = `${progressPercentage}%`;
+    }
+
+    updateBadgeContainer() {
+        const badgeContainer = document.querySelector('.badge-container');
+        badgeContainer.innerHTML = ''; // Clear previous badges
+
+        const earnedBadges = noteData.getEarnedBadges();
+        earnedBadges.forEach(badge => {
+            const img = document.createElement('img');
+            img.src = `icons/${badge.replace(/ /g, '-').toLowerCase()}.png`;
+            img.title = badge;
+            img.alt = `${badge} badge`;
+            badgeContainer.appendChild(img);
+        });
     }
 
     setupEventListeners() {
@@ -272,6 +288,8 @@ class MusicFlashcards {
                 btn.classList.remove('selected', 'correct', 'incorrect');
                 btn.disabled = false;
             });
+            noteData.resetConsecutiveCorrectAnswers();
+            this.updateBadgeContainer();
         });
 
         clefToggle.addEventListener('click', () => {

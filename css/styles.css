@@ -200,3 +200,21 @@ button:hover {
         margin: 0.2rem;
     }
 }
+
+.badge-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.badge-container img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.badge-container img:hover {
+    transform: scale(1.2);
+}
