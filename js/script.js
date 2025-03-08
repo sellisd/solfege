@@ -207,11 +207,11 @@ class MusicFlashcards {
         const updateTooltipContent = () => {
             let content = '';
             if (this.userLevel === 1) {
-                content = 'Level 1: Notes on staff only';
+                content = i18n.translate('levelDescription1');
             } else if (this.userLevel === 2) {
-                content = 'Level 2: Notes on staff + first ledger line notes';
+                content = i18n.translate('levelDescription2');
             } else if (this.userLevel === 3) {
-                content = 'Level 3: All notes including extended ledger lines';
+                content = i18n.translate('levelDescription3');
             }
             tooltip.textContent = content;
         };
@@ -393,6 +393,101 @@ class MusicFlashcards {
         });
     }
 }
+
+// Level Up Modal Functions
+window.showLevelUpModal = function(oldLevel, newLevel, remainingXP, newPointsNeeded) {
+    // Update modal content based on level
+    document.getElementById('new-level').textContent = newLevel;
+    
+    // Set level-specific description
+    const levelDescriptionKey = `levelDescription${newLevel}`;
+    document.getElementById('level-description').textContent = i18n.translate(levelDescriptionKey);
+    
+    // Set reached level text
+    document.getElementById('reached-level-text').textContent = i18n.translate('reachedLevel', { level: newLevel });
+    
+    // No need to render new notes visualization anymore
+    
+    // No XP transition animation needed
+    
+    // Show modal with animation
+    const modal = document.getElementById('level-up-modal');
+    modal.style.display = 'flex';
+    setTimeout(() => {
+        modal.classList.add('visible');
+    }, 10);
+    
+    // Add confetti animation
+    createConfetti();
+    
+    // Set up continue button
+    document.getElementById('continue-btn').addEventListener('click', () => {
+        modal.classList.remove('visible');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            // Remove confetti elements
+            document.querySelectorAll('.confetti').forEach(el => el.remove());
+        }, 500);
+    }, { once: true }); // Use once to prevent multiple event listeners
+};
+
+function createConfetti() {
+    // Remove any existing confetti
+    document.querySelectorAll('.confetti').forEach(el => el.remove());
+    
+    // Create animated confetti elements
+    const colors = ['#f1c40f', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6'];
+    const modalContent = document.querySelector('.modal-content');
+    
+    for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.top = `${Math.random() * 100}%`;
+        confetti.style.animationDelay = `${Math.random() * 2}s`;
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        modalContent.appendChild(confetti);
+    }
+}
+
+// Badge Modal Function
+window.showBadgeModal = function(badgeName) {
+    // Get badge image and description
+    let filename;
+    let description;
+    
+    if (badgeName.includes('level')) {
+        const level = badgeName.match(/level (\d+)/i)[1];
+        filename = `badge-level-${level}`;
+        description = i18n.translate('reachedLevelBadge', { level });
+    } else {
+        const number = badgeName.match(/^(\d+)/)[1];
+        filename = `badge-${number}-correct`;
+        description = i18n.translate('correctAnswersRow', { count: number });
+    }
+    
+    // Set badge image and description
+    const badgeImage = document.getElementById('badge-image');
+    badgeImage.src = `icons/${filename}.png`;
+    badgeImage.alt = badgeName;
+    
+    document.getElementById('badge-description').textContent = description;
+    
+    // Show modal
+    const modal = document.getElementById('badge-modal');
+    modal.style.display = 'flex';
+    setTimeout(() => {
+        modal.classList.add('visible');
+    }, 10);
+    
+    // Auto-dismiss after 3 seconds
+    setTimeout(() => {
+        modal.classList.remove('visible');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 500);
+    }, 3000);
+};
 
 // Initialize the app when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {

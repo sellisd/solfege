@@ -76,6 +76,44 @@
         </main>
     </div>
     
+    <!-- Badge Achievement Modal -->
+    <div id="badge-modal" class="modal badge-modal">
+        <div class="modal-content badge-modal-content">
+            <div class="badge-modal-body">
+                <div class="badge-image-container">
+                    <img id="badge-image" src="" alt="Badge">
+                </div>
+                <p class="badge-title" data-i18n="achievementUnlocked">Achievement Unlocked!</p>
+                <p id="badge-description" class="badge-description"></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Level Up Modal -->
+    <div id="level-up-modal" class="modal">
+        <div class="modal-content">
+            <!-- Header Section -->
+            <div class="modal-header">
+                <h2 data-i18n="levelUp">Level Up!</h2>
+                <div class="level-badge">Level <span id="new-level">2</span></div>
+            </div>
+            
+            <!-- Content Section -->
+            <div class="modal-body">
+                <p class="congratulation"><span data-i18n="congratulations">Congratulations!</span> <span id="reached-level-text"></span></p>
+                
+                <div class="level-description">
+                    <p id="level-description"></p>
+                </div>
+            </div>
+            
+            <!-- Action Section -->
+            <div class="modal-footer">
+                <button id="continue-btn" class="continue-button" data-i18n="continue">Continue</button>
+            </div>
+        </div>
+    </div>
+    
     <footer>
         <a href="https://github.com/sellisd/solfege">Source Code</a>
     </footer>

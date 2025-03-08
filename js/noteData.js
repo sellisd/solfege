@@ -144,15 +144,48 @@ class NoteData {
     checkLevelUp() {
         const pointsNeeded = this.userLevel * 100; // Example: 100 points per level
         if (this.experiencePoints >= pointsNeeded) {
+            const oldLevel = this.userLevel;
             this.userLevel++;
-            this.experiencePoints -= pointsNeeded;
+            
+            // Calculate new values for the modal
+            const newPointsNeeded = this.userLevel * 100;
+            const remainingXP = this.experiencePoints - pointsNeeded;
+            
             // Award level badge
             const levelBadge = `Reached level ${this.userLevel}`;
             if (!this.earnedBadges.includes(levelBadge)) {
                 this.earnedBadges.push(levelBadge);
                 Logger.log('NoteData', 'Level badge awarded', { badge: levelBadge });
+                
+                // Show badge modal for level badge
+                if (typeof window.showBadgeModal === 'function') {
+                    // We'll show this after the level up modal
+                    setTimeout(() => {
+                        window.showBadgeModal(levelBadge);
+                    }, 4000); // Show after level up modal is likely dismissed
+                }
             }
+            
+            // Unlock new features
             this.unlockNewFeatures();
+            
+            // Reset XP (but keep overflow)
+            this.experiencePoints = remainingXP;
+            
+            // Trigger level up modal
+            // We use setTimeout to ensure the DOM is updated before showing the modal
+            setTimeout(() => {
+                if (typeof window.showLevelUpModal === 'function') {
+                    window.showLevelUpModal(oldLevel, this.userLevel, remainingXP, newPointsNeeded);
+                }
+            }, 500);
+            
+            Logger.log('NoteData', 'Level up', { 
+                oldLevel, 
+                newLevel: this.userLevel, 
+                remainingXP, 
+                newPointsNeeded 
+            });
         }
     }
 
@@ -183,6 +216,11 @@ class NoteData {
             if (this.consecutiveCorrectAnswers === criteria.count && !this.earnedBadges.includes(criteria.badge)) {
                 this.earnedBadges.push(criteria.badge);
                 Logger.log('NoteData', 'Badge awarded', { badge: criteria.badge });
+                
+                // Show badge modal
+                if (typeof window.showBadgeModal === 'function') {
+                    window.showBadgeModal(criteria.badge);
+                }
             }
         });
     }

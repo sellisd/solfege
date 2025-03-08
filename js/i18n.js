@@ -10,7 +10,19 @@ const translations = {
         correct: 'Correct!',
         incorrect: 'Try again! The correct answer was:',
         trebleClef: 'Treble Clef',
-        bassClef: 'Bass Clef'
+        bassClef: 'Bass Clef',
+        // Level up modal
+        levelUp: 'Level Up!',
+        congratulations: 'Congratulations!',
+        reachedLevel: 'You\'ve reached Level {level}!',
+        levelDescription1: 'Notes on staff only',
+        levelDescription2: 'Notes with first ledger lines',
+        levelDescription3: 'Notes with extended ledger lines',
+        continue: 'Continue',
+        // Badge modal
+        achievementUnlocked: 'Achievement Unlocked!',
+        correctAnswersRow: '{count} correct answers in a row!',
+        reachedLevelBadge: 'You\'ve reached Level {level}!'
     },
     fr: {
         title: 'Cartes Flash de Notes de Musique',
@@ -23,7 +35,19 @@ const translations = {
         correct: 'Correct !',
         incorrect: 'Essayez encore ! La bonne réponse était :',
         trebleClef: 'Clé de Sol',
-        bassClef: 'Clé de Fa'
+        bassClef: 'Clé de Fa',
+        // Level up modal
+        levelUp: 'Niveau Supérieur !',
+        congratulations: 'Félicitations !',
+        reachedLevel: 'Vous avez atteint le niveau {level} !',
+        levelDescription1: 'Notes sur la portée uniquement',
+        levelDescription2: 'Notes avec premières lignes supplémentaires',
+        levelDescription3: 'Notes avec lignes supplémentaires étendues',
+        continue: 'Continuer',
+        // Badge modal
+        achievementUnlocked: 'Succès Débloqué !',
+        correctAnswersRow: '{count} réponses correctes d\'affilée !',
+        reachedLevelBadge: 'Vous avez atteint le niveau {level} !'
     },
     el: {
         title: 'Κάρτες Μουσικών Νοτών',
@@ -36,7 +60,19 @@ const translations = {
         correct: 'Σωστό!',
         incorrect: 'Προσπαθήστε ξανά! Η σωστή απάντηση ήταν:',
         trebleClef: 'Κλειδί του Σολ',
-        bassClef: 'Κλειδί του Φα'
+        bassClef: 'Κλειδί του Φα',
+        // Level up modal
+        levelUp: 'Αναβάθμιση Επιπέδου!',
+        congratulations: 'Συγχαρητήρια!',
+        reachedLevel: 'Φτάσατε στο Επίπεδο {level}!',
+        levelDescription1: 'Νότες μόνο στο πεντάγραμμο',
+        levelDescription2: 'Νότες με πρώτες βοηθητικές γραμμές',
+        levelDescription3: 'Νότες με εκτεταμένες βοηθητικές γραμμές',
+        continue: 'Συνέχεια',
+        // Badge modal
+        achievementUnlocked: 'Επίτευγμα Ξεκλειδώθηκε!',
+        correctAnswersRow: '{count} σωστές απαντήσεις στη σειρά!',
+        reachedLevelBadge: 'Φτάσατε στο Επίπεδο {level}!'
     }
 };
 
@@ -129,8 +165,15 @@ class I18n {
         }
     }
 
-    translate(key) {
-        return translations[this.currentLanguage][key] || key;
+    translate(key, params = {}) {
+        let text = translations[this.currentLanguage][key] || key;
+        
+        // Replace parameters in the text
+        Object.keys(params).forEach(param => {
+            text = text.replace(`{${param}}`, params[param]);
+        });
+        
+        return text;
     }
 
     translateNote(note) {
