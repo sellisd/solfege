@@ -197,7 +197,16 @@ class MusicFlashcards {
         const earnedBadges = noteData.getEarnedBadges();
         earnedBadges.forEach(badge => {
             const img = document.createElement('img');
-            img.src = `icons/${badge.replace(/ /g, '-').toLowerCase()}.png`;
+            // Convert badge names to actual file names
+            let filename;
+            if (badge.includes('level')) {
+                const level = badge.match(/level (\d+)/i)[1];
+                filename = `badge-level-${level}`;
+            } else {
+                const number = badge.match(/^(\d+)/)[1];
+                filename = `badge-${number}-correct`;
+            }
+            img.src = `icons/${filename}.png`;
             img.title = badge;
             img.alt = `${badge} badge`;
             badgeContainer.appendChild(img);

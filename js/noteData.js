@@ -125,6 +125,12 @@ class NoteData {
         if (this.experiencePoints >= pointsNeeded) {
             this.userLevel++;
             this.experiencePoints -= pointsNeeded;
+            // Award level badge
+            const levelBadge = `Reached level ${this.userLevel}`;
+            if (!this.earnedBadges.includes(levelBadge)) {
+                this.earnedBadges.push(levelBadge);
+                Logger.log('NoteData', 'Level badge awarded', { badge: levelBadge });
+            }
             this.unlockNewFeatures();
         }
     }
