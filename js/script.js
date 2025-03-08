@@ -157,11 +157,19 @@ class MusicFlashcards {
                 newScore: this.score
             });
             
-            // Add experience points and update level
-            noteData.addExperiencePoints(10); // Example: 10 points per correct answer
+            // Add experience points and update level and show XP gain
+            const xpGained = 10; // Example: 10 points per correct answer
+            noteData.addExperiencePoints(xpGained);
             this.userLevel = noteData.userLevel;
             this.experiencePoints = noteData.experiencePoints;
             document.getElementById('level').textContent = this.userLevel;
+            
+            // Show XP gain animation
+            const button = document.querySelector('.note-btn.correct');
+            if (button) {
+                this.showXPGain(xpGained, button);
+            }
+            
             this.updateProgressBar();
             this.updateBadgeContainer();
         }
@@ -185,9 +193,43 @@ class MusicFlashcards {
 
     updateProgressBar() {
         const progressBar = document.getElementById('progress');
-        const pointsNeeded = this.userLevel * 100; // Example: 100 points per level
+        const pointsNeeded = this.userLevel * 100;
         const progressPercentage = (this.experiencePoints / pointsNeeded) * 100;
+        
+        // Update XP counter
+        document.getElementById('xp-counter').textContent = this.experiencePoints;
+        
+        // Update progress bar width with animation
         progressBar.style.width = `${progressPercentage}%`;
+        
+        // Update tooltip
+        const tooltip = progressBar.querySelector('.progress-tooltip');
+        tooltip.textContent = `${this.experiencePoints}/${pointsNeeded} XP to level ${this.userLevel + 1}`;
+        
+        // Add pulse animation when close to leveling up
+        if (progressPercentage >= 80) {
+            progressBar.classList.add('near-level');
+        } else {
+            progressBar.classList.remove('near-level');
+        }
+    }
+
+    showXPGain(xpAmount, element) {
+        const xpText = document.createElement('div');
+        xpText.className = 'xp-gain';
+        xpText.textContent = `+${xpAmount} XP`;
+        
+        // Position the XP gain notification near the element
+        const rect = element.getBoundingClientRect();
+        xpText.style.left = `${rect.left + rect.width / 2}px`;
+        xpText.style.top = `${rect.top}px`;
+        
+        document.body.appendChild(xpText);
+        
+        // Remove the element after animation completes
+        xpText.addEventListener('animationend', () => {
+            xpText.remove();
+        });
     }
 
     updateBadgeContainer() {
