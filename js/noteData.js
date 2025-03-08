@@ -1,10 +1,9 @@
 class NoteData {
     constructor() {
         Logger.log('NoteData', 'Initializing NoteData');
-        // VexFlow uses standard music notation where middle C is C4
-        this.trebleNotes = [
-            { note: 'C', vfNote: 'c/4' },  // Middle C
-            { note: 'D', vfNote: 'd/4' },
+        
+        // Define notes by level for treble clef
+        this.trebleNotesLevel1 = [ // Notes on staff only (E4 to F5)
             { note: 'E', vfNote: 'e/4' },
             { note: 'F', vfNote: 'f/4' },
             { note: 'G', vfNote: 'g/4' },
@@ -13,14 +12,23 @@ class NoteData {
             { note: 'C', vfNote: 'c/5' },
             { note: 'D', vfNote: 'd/5' },
             { note: 'E', vfNote: 'e/5' },
-            { note: 'F', vfNote: 'f/5' },
-            { note: 'G', vfNote: 'g/5' },
-            { note: 'A', vfNote: 'a/5' },  // Added for higher levels
-            { note: 'B', vfNote: 'b/5' }   // Added for higher levels
+            { note: 'F', vfNote: 'f/5' }
         ];
-
-        this.bassNotes = [
-            { note: 'F', vfNote: 'f/2' },
+        
+        this.trebleNotesLevel2 = [ // First ledger line below and above
+            { note: 'D', vfNote: 'd/4' }, // One ledger line below staff
+            { note: 'G', vfNote: 'g/5' }  // One ledger line above staff
+        ];
+        
+        this.trebleNotesLevel3 = [ // Extended ledger lines
+            { note: 'C', vfNote: 'c/4' }, // Middle C (one more ledger line below)
+            { note: 'A', vfNote: 'a/5' }, // Two ledger lines above
+            { note: 'B', vfNote: 'b/5' }, // Three ledger lines above
+            { note: 'C', vfNote: 'c/6' }  // Four ledger lines above
+        ];
+        
+        // Define notes by level for bass clef
+        this.bassNotesLevel1 = [ // Notes on staff only (G2 to A3)
             { note: 'G', vfNote: 'g/2' },
             { note: 'A', vfNote: 'a/2' },
             { note: 'B', vfNote: 'b/2' },
@@ -29,12 +37,24 @@ class NoteData {
             { note: 'E', vfNote: 'e/3' },
             { note: 'F', vfNote: 'f/3' },
             { note: 'G', vfNote: 'g/3' },
-            { note: 'A', vfNote: 'a/3' },
-            { note: 'B', vfNote: 'b/3' },
-            { note: 'C', vfNote: 'c/4' },  // Middle C
-            { note: 'D', vfNote: 'd/2' },  // Added for higher levels
-            { note: 'E', vfNote: 'e/2' }   // Added for higher levels
+            { note: 'A', vfNote: 'a/3' }
         ];
+        
+        this.bassNotesLevel2 = [ // First ledger line below and above
+            { note: 'F', vfNote: 'f/2' }, // One ledger line below staff
+            { note: 'B', vfNote: 'b/3' }  // One ledger line above staff
+        ];
+        
+        this.bassNotesLevel3 = [ // Extended ledger lines
+            { note: 'E', vfNote: 'e/2' }, // Two ledger lines below
+            { note: 'D', vfNote: 'd/2' }, // Three ledger lines below
+            { note: 'C', vfNote: 'c/2' }, // Four ledger lines below
+            { note: 'C', vfNote: 'c/4' }  // Middle C (one more ledger line above)
+        ];
+        
+        // Initialize active notes with level 1 only
+        this.trebleNotes = [...this.trebleNotesLevel1];
+        this.bassNotes = [...this.bassNotesLevel1];
 
         this.currentClef = 'treble';
         this.currentNote = null;
@@ -56,7 +76,8 @@ class NoteData {
         Logger.log('NoteData', 'Generated random note', {
             clef: this.currentClef,
             note: this.currentNote.note,
-            position: this.currentNote.position
+            level: this.userLevel,
+            vfNote: this.currentNote.vfNote
         });
         
         return this.currentNote;
@@ -138,19 +159,16 @@ class NoteData {
     unlockNewFeatures() {
         // Unlock new features based on user level
         if (this.userLevel === 2) {
-            // Example: Unlock additional note ranges
-            this.trebleNotes.push({ note: 'A', vfNote: 'a/5' });
-            this.trebleNotes.push({ note: 'B', vfNote: 'b/5' });
-            this.bassNotes.push({ note: 'D', vfNote: 'd/2' });
-            this.bassNotes.push({ note: 'E', vfNote: 'e/2' });
+            // Level 2: Add first ledger line notes
+            Logger.log('NoteData', 'Unlocking Level 2 notes (first ledger lines)');
+            this.trebleNotes = [...this.trebleNotesLevel1, ...this.trebleNotesLevel2];
+            this.bassNotes = [...this.bassNotesLevel1, ...this.bassNotesLevel2];
         } else if (this.userLevel === 3) {
-            // Example: Unlock even more note ranges
-            this.trebleNotes.push({ note: 'C', vfNote: 'c/6' });
-            this.trebleNotes.push({ note: 'D', vfNote: 'd/6' });
-            this.bassNotes.push({ note: 'C', vfNote: 'c/2' });
-            this.bassNotes.push({ note: 'B', vfNote: 'b/1' });
+            // Level 3: Add extended ledger line notes
+            Logger.log('NoteData', 'Unlocking Level 3 notes (extended ledger lines)');
+            this.trebleNotes = [...this.trebleNotesLevel1, ...this.trebleNotesLevel2, ...this.trebleNotesLevel3];
+            this.bassNotes = [...this.bassNotesLevel1, ...this.bassNotesLevel2, ...this.bassNotesLevel3];
         }
-        // Add more unlocks as needed
     }
 
     // Add a method to check and award badges based on consecutive correct answers

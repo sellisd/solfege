@@ -15,6 +15,7 @@ class MusicFlashcards {
         // Initialize VexFlow and set up event listeners
         this.setupVexFlow();
         this.setupEventListeners();
+        this.setupLevelInfoTooltip();
         this.updateProgressBar();
         this.updateBadgeContainer();
     }
@@ -187,8 +188,45 @@ class MusicFlashcards {
         
         // Add level progression feedback
         if (correct) {
-            feedback.textContent += ` | Level: ${this.userLevel}`;
+            const pointsNeeded = this.userLevel * 100;
+            const remainingPoints = pointsNeeded - this.experiencePoints;
+            
+            feedback.textContent += ` | Level: ${this.userLevel} | ${remainingPoints} XP to next level`;
         }
+    }
+    
+    // Show level info when hovering over the level display
+    setupLevelInfoTooltip() {
+        const levelElement = document.getElementById('level');
+        const tooltip = document.createElement('div');
+        tooltip.className = 'level-tooltip';
+        tooltip.style.display = 'none';
+        document.body.appendChild(tooltip);
+        
+        // Update tooltip content based on current level
+        const updateTooltipContent = () => {
+            let content = '';
+            if (this.userLevel === 1) {
+                content = 'Level 1: Notes on staff only';
+            } else if (this.userLevel === 2) {
+                content = 'Level 2: Notes on staff + first ledger line notes';
+            } else if (this.userLevel === 3) {
+                content = 'Level 3: All notes including extended ledger lines';
+            }
+            tooltip.textContent = content;
+        };
+        
+        levelElement.addEventListener('mouseenter', (e) => {
+            updateTooltipContent();
+            const rect = levelElement.getBoundingClientRect();
+            tooltip.style.left = `${rect.left}px`;
+            tooltip.style.top = `${rect.bottom + 5}px`;
+            tooltip.style.display = 'block';
+        });
+        
+        levelElement.addEventListener('mouseleave', () => {
+            tooltip.style.display = 'none';
+        });
     }
 
     updateProgressBar() {

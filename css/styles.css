@@ -294,3 +294,29 @@ button:hover {
 .badge-container img:hover {
     transform: scale(1.2);
 }
+
+/* Level tooltip styles */
+.level-tooltip {
+    position: absolute;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Make level number clickable/hoverable */
+#level {
+    cursor: help;
+    text-decoration: underline dotted;
+    position: relative;
+}
+
+/* Add a visual indicator for level progression */
+.score-container {
+    position: relative;
+}
