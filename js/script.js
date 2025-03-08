@@ -492,4 +492,49 @@ window.showBadgeModal = function(badgeName) {
 // Initialize the app when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new MusicFlashcards();
+    
+    // Set up feedback button
+    setupFeedbackButton();
 });
+
+// Setup feedback button with enhanced functionality
+function setupFeedbackButton() {
+    const feedbackBtn = document.getElementById('feedbackBtn');
+    if (feedbackBtn) {
+        feedbackBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Create a template for the feedback
+            const template = `
+## Feedback
+
+### What I like:
+<!-- Describe what you like about the app -->
+
+### What could be improved:
+<!-- Describe what could be improved -->
+
+### Additional comments:
+<!-- Any other comments or suggestions -->
+
+### App Information:
+- Browser: ${navigator.userAgent}
+- Language: ${i18n.currentLanguage}
+- Level: ${noteData.userLevel}
+`;
+            
+            // Encode the template for URL
+            const encodedBody = encodeURIComponent(template);
+            const encodedTitle = encodeURIComponent('Feedback: Music Note Flashcards');
+            
+            // Open GitHub issue page with pre-filled information
+            const url = `https://github.com/sellisd/solfege/issues/new?labels=feedback&title=${encodedTitle}&body=${encodedBody}`;
+            window.open(url, '_blank');
+            
+            Logger.log('Feedback', 'Feedback button clicked', {
+                language: i18n.currentLanguage,
+                level: noteData.userLevel
+            });
+        });
+    }
+}

@@ -22,7 +22,9 @@ const translations = {
         // Badge modal
         achievementUnlocked: 'Achievement Unlocked!',
         correctAnswersRow: '{count} correct answers in a row!',
-        reachedLevelBadge: 'You\'ve reached Level {level}!'
+        reachedLevelBadge: 'You\'ve reached Level {level}!',
+        // Footer
+        feedback: 'Submit Feedback'
     },
     fr: {
         title: 'Cartes Flash de Notes de Musique',
@@ -47,7 +49,9 @@ const translations = {
         // Badge modal
         achievementUnlocked: 'Succès Débloqué !',
         correctAnswersRow: '{count} réponses correctes d\'affilée !',
-        reachedLevelBadge: 'Vous avez atteint le niveau {level} !'
+        reachedLevelBadge: 'Vous avez atteint le niveau {level} !',
+        // Footer
+        feedback: 'Soumettre des Commentaires'
     },
     el: {
         title: 'Κάρτες Μουσικών Νοτών',
@@ -72,7 +76,9 @@ const translations = {
         // Badge modal
         achievementUnlocked: 'Επίτευγμα Ξεκλειδώθηκε!',
         correctAnswersRow: '{count} σωστές απαντήσεις στη σειρά!',
-        reachedLevelBadge: 'Φτάσατε στο Επίπεδο {level}!'
+        reachedLevelBadge: 'Φτάσατε στο Επίπεδο {level}!',
+        // Footer
+        feedback: 'Υποβολή Σχολίων'
     }
 };
 
