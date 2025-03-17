@@ -234,6 +234,12 @@ class NoteData {
     getEarnedBadges() {
         return this.earnedBadges;
     }
+
+    // Add a method to check if the user has reached the last level
+    isLastLevel() {
+        const lastLevel = 3; // Define the last level
+        return this.userLevel >= lastLevel;
+    }
 }
 
 const noteData = new NoteData();
