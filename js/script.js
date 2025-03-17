@@ -299,6 +299,7 @@ class MusicFlashcards {
         const nextBtn = document.getElementById('nextBtn');
         const resetBtn = document.getElementById('resetBtn');
         const clefToggle = document.getElementById('clefToggle');
+        const restartBtn = document.getElementById('restart-btn'); // Pe28e
 
         const handleNoteSelection = (button) => {
             Logger.log('MusicFlashcards', 'Note button clicked', {
@@ -392,6 +393,35 @@ class MusicFlashcards {
                 btn.disabled = false;
             });
         });
+
+        restartBtn.addEventListener('click', () => { // Pe28e
+            Logger.log('MusicFlashcards', 'Restart button clicked');
+            this.restartGame();
+        });
+    }
+
+    restartGame() { // Pe28e
+        this.score = 0;
+        document.getElementById('score').textContent = '0';
+        this.userLevel = 1;
+        this.experiencePoints = 0;
+        noteData.userLevel = 1;
+        noteData.experiencePoints = 0;
+        this.drawNewNote();
+        document.getElementById('feedback').textContent = '';
+        const noteButtons = document.querySelectorAll('.note-btn');
+        noteButtons.forEach(btn => {
+            btn.classList.remove('selected', 'correct', 'incorrect');
+            btn.disabled = false;
+        });
+        noteData.resetConsecutiveCorrectAnswers();
+        this.updateBadgeContainer();
+        this.updateProgressBar();
+        const endGameModal = document.getElementById('end-game-modal');
+        endGameModal.classList.remove('visible');
+        setTimeout(() => {
+            endGameModal.style.display = 'none';
+        }, 500);
     }
 }
 
@@ -430,6 +460,11 @@ window.showLevelUpModal = function(oldLevel, newLevel, remainingXP, newPointsNee
             document.querySelectorAll('.confetti').forEach(el => el.remove());
         }, 500);
     }, { once: true }); // Use once to prevent multiple event listeners
+
+    // Check if the last level is reached and end the game if true
+    if (noteData.isLastLevel()) {
+        endGame();
+    }
 };
 
 function createConfetti() {
@@ -491,6 +526,15 @@ window.showBadgeModal = function(badgeName) {
         }
     });
 };
+
+// End Game Function
+function endGame() { // Pec99
+    const endGameModal = document.getElementById('end-game-modal');
+    endGameModal.style.display = 'flex';
+    setTimeout(() => {
+        endGameModal.classList.add('visible');
+    }, 10);
+}
 
 // Initialize the app when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
