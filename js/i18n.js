@@ -23,6 +23,9 @@ const translations = {
         achievementUnlocked: 'Achievement Unlocked!',
         correctAnswersRow: '{count} correct answers in a row!',
         reachedLevelBadge: 'You\'ve reached Level {level}!',
+        // End game modal
+        endGameMessage: 'You have reached the last level and completed the game!',
+        restartGame: 'Restart Game',
         // Footer
         feedback: 'Submit Feedback'
     },
@@ -50,6 +53,9 @@ const translations = {
         achievementUnlocked: 'Succès Débloqué !',
         correctAnswersRow: '{count} réponses correctes d\'affilée !',
         reachedLevelBadge: 'Vous avez atteint le niveau {level} !',
+        // End game modal
+        endGameMessage: 'Vous avez atteint le dernier niveau et terminé le jeu !',
+        restartGame: 'Recommencer le jeu',
         // Footer
         feedback: 'Soumettre des Commentaires'
     },
@@ -77,6 +83,9 @@ const translations = {
         achievementUnlocked: 'Επίτευγμα Ξεκλειδώθηκε!',
         correctAnswersRow: '{count} σωστές απαντήσεις στη σειρά!',
         reachedLevelBadge: 'Φτάσατε στο Επίπεδο {level}!',
+        // End game modal
+        endGameMessage: 'Έχετε φτάσει στο τελευταίο επίπεδο και ολοκληρώσατε το παιχνίδι!',
+        restartGame: 'Επανεκκίνηση Παιχνιδιού',
         // Footer
         feedback: 'Υποβολή Σχολίων'
     }
