@@ -289,6 +289,7 @@ class MusicFlashcards {
             img.src = `icons/${filename}.png`;
             img.title = badge;
             img.alt = `${badge} badge`;
+            img.onclick = () => showBadgeModal(badge); // P35cc
             badgeContainer.appendChild(img);
         });
     }
@@ -480,13 +481,15 @@ window.showBadgeModal = function(badgeName) {
         modal.classList.add('visible');
     }, 10);
     
-    // Auto-dismiss after 3 seconds
-    setTimeout(() => {
-        modal.classList.remove('visible');
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 500);
-    }, 3000);
+    // Add event listener to close modal when clicking outside the modal content
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.classList.remove('visible');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 500);
+        }
+    });
 };
 
 // Initialize the app when the DOM is loaded
