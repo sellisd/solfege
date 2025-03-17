@@ -461,8 +461,8 @@ window.showLevelUpModal = function(oldLevel, newLevel, remainingXP, newPointsNee
         }, 500);
     }, { once: true }); // Use once to prevent multiple event listeners
 
-    // Check if the last level is reached and end the game if true
-    if (noteData.isLastLevel()) {
+    // Check if the user is at the end of level 3 and end the game if true
+    if (noteData.isEndOfLevel(3)) {
         endGame();
     }
 };

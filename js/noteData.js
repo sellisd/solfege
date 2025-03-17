@@ -238,7 +238,13 @@ class NoteData {
     // Add a method to check if the user has reached the last level
     isLastLevel() {
         const lastLevel = 3; // Define the last level
-        return this.userLevel >= lastLevel;
+        return this.userLevel > lastLevel;
+    }
+
+    // Add a method to check if the user is at the end of a specific level
+    isEndOfLevel(level) {
+        const pointsNeeded = level * 100;
+        return this.experiencePoints >= pointsNeeded;
     }
 }
 
